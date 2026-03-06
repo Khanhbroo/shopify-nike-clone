@@ -1,1 +1,1 @@
-# shopify-nike-clone
+# shopify-nike
