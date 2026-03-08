@@ -1,0 +1,92 @@
+<footer class="footer-main">
+  <div class="footer-section-first">
+    {%- if section.blocks.size == 0 -%}
+      <div>
+        <p>Guides</p>
+        <p>Terms of Sale</p>
+        <p>Terms of Use</p>
+        <p>Guides</p>
+        <p>Terms of Sale</p>
+      </div>
+      <div>
+        <p>Guides</p>
+        <p>Terms of Sale</p>
+        <p>Terms of Use</p>
+        <p>Guides</p>
+        <p>Terms of Sale</p>
+      </div>
+
+    {% else %}
+      {% for block in section.blocks %}
+        <div>
+          <li>
+            <a href="{{ block.settings.footer_link }}">{{ block.settings.footer_text | escape }}</a>
+          </li>
+          <li>
+            <a href="{{ block.settings.footer_link }}">{{ block.settings.footer_text | escape }}</a>
+          </li>
+          <li>
+            <a href="{{ block.settings.footer_link }}">{{ block.settings.footer_text | escape }}</a>
+          </li>
+          <li>
+            <a href="{{ block.settings.footer_link }}">{{ block.settings.footer_text | escape }}</a>
+          </li>
+        </div>
+      {% endfor %}
+    {%- endif -%}
+  </div>
+
+  <div class="footer-section-second">
+    <p>Guides</p>
+    <p>Terms of Sale</p>
+    <p>Terms of Use</p>
+    <p>Privacy Policy</p>
+  </div>
+</footer>
+
+<style>
+  .footer-main {
+    background: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+    padding: 10px;
+  }
+
+  .footer-section-first {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .footer-section-second {
+    display: flex;
+
+    & p {
+        padding: 10px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "footer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#F4F4F4"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer"
+    }
+  ]
+}
+{% endschema %}
