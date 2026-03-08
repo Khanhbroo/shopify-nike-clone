@@ -1,0 +1,77 @@
+<section class="collections">
+  <h1>Featured Collections</h1>
+  <div class="collections-container">
+    <div class="collections-wrapper">
+      {% for collection in collections %}
+        <div class="collections-card">
+          <img width="300" height="300" loading="lazy" src="{{ collection.featured_image | image_url }}" alt="">
+          <h3>{{ collection.title | link_to: collection.url }}</h3>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .collections {
+      background: {{ section.settings.background_color }};
+      color: {{ section.settings.text_color }};
+      padding: 10px;
+  }
+
+  .collections-container {
+      position: relative;
+      overflow-x: auto;
+  }
+
+  .collections-wrapper {
+    display: flex;
+    transition: transform 0.3 ease;
+    justify-content: space-around;
+  }
+
+  .collections-card {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & h3 a {
+        color: inherit;
+        text-decoration: none;
+        transition: all 0.5s ease;
+
+        &:hover {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            opacity: 0.75;
+        }
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "collections",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#F4F4F4"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections"
+    }
+  ]
+}
+{% endschema %}

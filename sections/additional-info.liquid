@@ -1,17 +1,20 @@
 <section class="additional-info">
   <div class="additional-info-wrapper">
     {% if section.settings.first_text != blank %}
-      <h1>THE RESOLUTION STARTER PACK</h1>
+      <h1>{{ section.settings.first_text }}</h1>
 
     {% else %}
-      <h1>{{ section.settings.first_text }}</h1>
+      <h1>THE RESOLUTION STARTER PACK</h1>
     {% endif %}
 
     {% if section.settings.second_text != blank %}
-      <p>THE RESOLUTION STARTER PACK</p>
+      <p>{{ section.settings.second_text }}</p>
 
     {% else %}
-      <p>{{ section.settings.second_text }}</p>
+      <p>
+        Go for all your fitness goals with a curated collection of new kicks breathable apparel, and more supportive
+        styles
+      </p>
     {% endif %}
 
     <button>Shop</button>

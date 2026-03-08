@@ -20,15 +20,15 @@
     "additional-info": {
       "type": "additional-info",
       "settings": {}
+    },
+    "collections": {
+      "type": "collections",
+      "settings": {}
+    },
+    "products": {
+      "type": "products",
+      "settings": {}
     }
-    // "all-collections": {
-    //   "type": "all-collections",
-    //   "settings": {}
-    // },
-    // "all-products": {
-    //   "type": "all-products",
-    //   "settings": {}
-    // }
   },
-  "order": ["banner", "images", "additional-info"]
+  "order": ["banner", "images", "additional-info", "collections", "products"]
 }
