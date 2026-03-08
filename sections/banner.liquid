@@ -14,16 +14,16 @@
 
 <style>
   .banner-wrapper {
-    height: 50px;
+    height: 50;
     color: {{ section.settings.text_color }};
-    ackground-color: {{ section.settings.background_color }};
+    background-color: {{ section.settings.background_color }};
   }
 
   .slider-text {
     position: absolute;
     top: 115px;
     left: -150%;
-    transform: translate(-50%, 0);
+    transform: translate(0, 25%);
     transition: left 0.6s ease;
   }
 </style>
@@ -41,7 +41,7 @@
       currentIndex = (currentIndex + 1) % texts.length;
 
       const nextText = texts[currentIndex];
-      nextText.style.left = '50%';
+      nextText.style.left = '44%';
     };
 
     setInterval(slideText, 3000);
@@ -50,7 +50,7 @@
 
 {% schema %}
 {
-  "name": "Banner",
+  "name": "banner",
   "settings": [
     {
       "type": "color",

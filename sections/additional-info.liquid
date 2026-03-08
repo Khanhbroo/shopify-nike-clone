@@ -1,0 +1,92 @@
+<section class="additional-info">
+  <div class="additional-info-wrapper">
+    {% if section.settings.first_text != blank %}
+      <h1>THE RESOLUTION STARTER PACK</h1>
+
+    {% else %}
+      <h1>{{ section.settings.first_text }}</h1>
+    {% endif %}
+
+    {% if section.settings.second_text != blank %}
+      <p>THE RESOLUTION STARTER PACK</p>
+
+    {% else %}
+      <p>{{ section.settings.second_text }}</p>
+    {% endif %}
+
+    <button>Shop</button>
+  </div>
+</section>
+
+<style>
+  .additional-info {
+    background: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+    display: flex;
+    justify-content: center;
+  }
+
+  .additional-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    justify-content: center;
+    align-items: center;
+
+    & h1 {
+        font-size: 50px;
+    }
+
+    & button {
+        padding: 10px 20px;
+        background-color: #000;
+        border: none;
+        color: #fff;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: rgb(185, 185, 185);
+            color: rgb(0, 0, 0);
+        }
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "additional-information",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#F4F4F4"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "text",
+      "id": "first_text",
+      "label": "First Text",
+      "default": "First Text"
+    },
+    {
+      "type": "text",
+      "id": "second_text",
+      "label": "Second Text",
+      "default": "Second Text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Additional Information"
+    }
+  ]
+}
+{% endschema %}

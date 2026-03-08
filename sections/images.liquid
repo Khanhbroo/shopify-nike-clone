@@ -1,0 +1,118 @@
+<section>
+  <div class="images-wrapper">
+    {% if section.settings.first_image != blank %}
+      <div class="first-image-merchant">
+        <h1></h1>
+      </div>
+    {% else %}
+      <div class="first-image-default">
+        <h1></h1>
+      </div>
+    {% endif %}
+
+    {% if section.settings.second_image != blank %}
+      <div class="second-image-merchant">
+        <h1></h1>
+      </div>
+    {% else %}
+      <div class="second-image-default">
+        <h1></h1>
+      </div>
+    {% endif %}
+
+    {% if section.settings.third_image != blank %}
+      <div class="third-image-merchant">
+        <h1></h1>
+      </div>
+    {% else %}
+      <div class="third-image-default">
+        <h1></h1>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .images-wrapper {
+    display: flex;
+  }
+
+  .first-image-default {
+    background-image: url(" {{ 'first-image-default.png' | asset_url}} ");
+    width: 33.3333%;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .first-image-merchant {
+    background-image: url(" {{ section.settings.first_image | image_url }} ");
+    width: 33.3333%;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .second-image-default {
+    background-image: url(" {{ 'second-image-default.png' | asset_url}} ");
+    width: 33.3333%;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .second-image-merchant {
+    background-image: url(" {{ section.settings.second_image | image_url }} ");
+    width: 33.3333%;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .third-image-default {
+    background-image: url(" {{ 'third-image-default.png' | asset_url}} ");
+    width: 33.3333%;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .third-image-merchant {
+    background-image: url(" {{ section.settings.third_image | image_url }} ");
+    width: 33.3333%;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "images",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "first_image",
+      "label": "First Image",
+      "info": "400 x 120px .png recommend"
+    },
+    {
+      "type": "image_picker",
+      "id": "second_image",
+      "label": "Second Image",
+      "info": "400 x 120px .png recommend"
+    },
+    {
+      "type": "image_picker",
+      "id": "third_image",
+      "label": "Third Image",
+      "info": "400 x 120px .png recommend"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Images"
+    }
+  ]
+}
+{% endschema %}
