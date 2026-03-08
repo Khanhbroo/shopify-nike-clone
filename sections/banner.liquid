@@ -1,9 +1,37 @@
-<section>Hello World</section>
+<section>
+  <div class="banner-wrapper">
+    <div class="slider-text" id="text1">
+      <p>Members: Free Shipping!</p>
+    </div>
+    <div class="slider-text" id="text2"></div>
+    <div class="slider-text" id="text3"></div>
+  </div>
+</section>
+
+<style>
+  section {
+    color: {{ section.settings.text_color }};
+    background-color: {{ section.settings.background_color }};
+  }
+</style>
 
 {% schema %}
 {
   "name": "Banner",
-  "settings": [],
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#F4F4F4"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    }
+  ],
   "presets": [
     {
       "name": "Banner"
