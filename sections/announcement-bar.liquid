@@ -1,4 +1,80 @@
-<p>Annoucement Bar</p>
+{% if section.settings['show-announcement'] %}
+  <section>
+    <div class="announcement-bar">
+      <div class="announcement-bar-left-section">
+        {% if section.settings.image_left != blank %}
+          <img
+            width="40"
+            height="40"
+            loading="lazy"
+            src="{{section.settings.image_left | image_url }}"
+            alt="Announcement Bar Left"
+          >
+
+        {% else %}
+          <img
+            width="40"
+            height="40"
+            loading="lazy"
+            src="{{"announcement-bar-left.png" | asset_url}}"
+            alt="Announcement Bar"
+          >
+        {% endif %}
+
+        {% if section.settings.image_right != blank %}
+          <img
+            width="40"
+            height="40"
+            loading="lazy"
+            src="{{section.settings.image_right | image_url }}"
+            alt="Annoucement Bar Right"
+          >
+
+        {% else %}
+          <img
+            width="40"
+            height="40"
+            loading="lazy"
+            src="{{"announcement-bar-right.png" | asset_url}}"
+            alt="Announcement Bar Right"
+          >
+        {% endif %}
+      </div>
+
+      <div class="announcement-bar-right-section">
+        <ul class="announcement-bar-inner-list">
+          {% if section.blocks.size == 0 %}
+            <li>
+              <a href="#">Help</a>
+            </li>
+            <li>
+              {% if shop.customer_accounts_enabled and customer %}
+                <a href="/account">Account</a>
+
+              {% else %}
+                <a href="/account/login">Sign in</a>
+              {% endif %}
+            </li>
+
+          {% else %}
+            {% for block in section.blocks %}
+              <li>
+                <a href="{{ block.settings.block_link }}">{{ block.settings.block_text }}</a>
+              </li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+<style>
+  .announcement-bar {
+    background: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+  }
+</style>
 
 {% schema %}
 {
@@ -9,6 +85,50 @@
       "id": "show-announcement",
       "label": "Show Announcement",
       "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image_left",
+      "label": "Pick Left Image",
+      "info": ".png format recommend"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_right",
+      "label": "Pick Right Image",
+      "info": ".png format recommend"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#F4F4F4"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Links",
+      "type": "links",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "block_text",
+          "label": "Text",
+          "default": "Link"
+        },
+        {
+          "type": "url",
+          "id": "block_link",
+          "label": "Link"
+        }
+      ]
     }
   ],
   "presets": [
