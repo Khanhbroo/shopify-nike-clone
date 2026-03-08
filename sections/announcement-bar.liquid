@@ -45,14 +45,14 @@
         <ul class="announcement-bar-inner-list">
           {% if section.blocks.size == 0 %}
             <li>
-              <a href="#">Help</a>
+              <a href="{{routes.root_url}}pages/contact">Help</a>
             </li>
             <li>
               {% if shop.customer_accounts_enabled and customer %}
-                <a href="/account">Account</a>
+                <a href="{{ routes.account_url }}">Account</a>
 
               {% else %}
-                <a href="/account/login">Sign in</a>
+                <a href="{{ routes.account_login_url }}">Sign in</a>
               {% endif %}
             </li>
 
