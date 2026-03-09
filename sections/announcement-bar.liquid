@@ -77,6 +77,14 @@
     font-family: var(--font-body);
   }
 
+  @media (max-width: 600px) {
+    .announcement-bar-main {
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px 15px;
+    }
+  }
+
   .announcement-bar-left-section {
     display: flex;
     align-items: center;
@@ -102,6 +110,8 @@
     padding: 0;
     align-items: center;
     gap: 10px; /* Add spacing between buttons */
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .announcement-bar-inner-list-custom li {

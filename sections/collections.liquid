@@ -38,46 +38,29 @@
 
   .collections-container {
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  
-  .collections-container::-webkit-scrollbar {
-    display: none;
   }
 
   .collections-grid {
-    display: flex;
-    gap: 20px;
-    min-width: max-content;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
   }
 
-  @media (min-width: 1024px) {
-    .collections-container {
-      overflow-x: visible;
-    }
+  @media (min-width: 768px) {
     .collections-grid {
-      display: grid;
       grid-template-columns: repeat(3, 1fr);
-      min-width: auto;
+      gap: 20px;
     }
   }
 
   .collection-card {
     display: flex;
     flex-direction: column;
-    width: 320px;
+    width: 100%;
     border-radius: 12px;
     overflow: hidden;
     position: relative;
     box-shadow: var(--shadow-sm);
-  }
-
-  @media (min-width: 1024px) {
-    .collection-card {
-      width: auto;
-    }
   }
 
   .collection-image-link {

@@ -5,7 +5,8 @@
     </a>
   </div>
 
-  <nav class="middle-navbar-container">
+  <!-- Desktop Navigation -->
+  <nav class="middle-navbar-container desktop-nav">
     <ul class="middle-navbar">
       {% for link in linklists['customer-account-main-menu'].links %}
         <li><a href="{{ link.url }}">{{ link.title }}</a></li>
@@ -21,7 +22,7 @@
   </nav>
 
   <div class="right-navbar" style="display: flex; align-items: center; gap: 15px;">
-    <form action="{{ routes.search_url }}" style="margin: 0; display: flex; align-items: center;">
+    <form action="{{ routes.search_url }}" class="search-form-header">
       <input
         type="search"
         class="search-navbar"
@@ -32,5 +33,154 @@
     <a href="/cart" class="cart-icon" style="display: flex; align-items: center;">
       <img width="30" height="30" loading="lazy" src="{{ 'cart.png' | asset_url }}" alt="Cart">
     </a>
+    
+    <!-- Hamburger Menu Toggle (Mobile Only) -->
+    <button class="mobile-menu-toggle" aria-label="Toggle menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
   </div>
 </header>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-nav-drawer">
+  <ul class="mobile-nav-list">
+    {% for link in linklists['customer-account-main-menu'].links %}
+      <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+    {% else %}
+      <li><a href="/collections/all">New & Featured</a></li>
+      <li><a href="/collections/men">Men</a></li>
+      <li><a href="/collections/women">Women</a></li>
+      <li><a href="/collections/kids">Kids</a></li>
+      <li><a href="/collections/sale">Sale</a></li>
+    {% endfor %}
+  </ul>
+</div>
+
+<style>
+  /* Header Nav layout rules */
+  .header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative;
+    z-index: 50;
+  }
+
+  /* Desktop Nav hidden on screens below 1024px */
+  @media (max-width: 1023px) {
+    .desktop-nav {
+      display: none !important;
+    }
+  }
+
+  /* Hamburger Toggle Styles */
+  .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-black, #ffffff);
+    cursor: pointer;
+    padding: 5px;
+    z-index: 60;
+  }
+
+  @media (max-width: 1023px) {
+    .mobile-menu-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  /* Search bar resizing */
+  .search-form-header {
+    margin: 0; 
+    display: flex; 
+    align-items: center;
+  }
+  
+  @media (max-width: 768px) {
+    .search-navbar {
+      width: 120px; /* shrink slightly on true mobile */
+    }
+  }
+
+  /* Mobile Drawer Overlay Styles */
+  .mobile-nav-drawer {
+    position: fixed;
+    top: 0; /* Should start below header, calculated dynamically or top 0 with pt */
+    right: -100%;
+    width: 300px;
+    max-width: 80vw;
+    height: 100vh;
+    background-color: var(--color-gray-100, #171717);
+    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+    z-index: 100;
+    transition: right var(--transition-normal, 0.3s) ease-in-out;
+    padding: 80px 30px 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-nav-drawer.active {
+    right: 0;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .mobile-nav-list a {
+    color: var(--color-black, #ffffff);
+    text-decoration: none;
+    font-family: var(--font-heading, Oswald);
+    font-size: 24px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .mobile-nav-list a:hover {
+    color: var(--color-accent, #ccff00);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.querySelector('.mobile-menu-toggle');
+    const drawer = document.querySelector('.mobile-nav-drawer');
+    const body = document.body;
+
+    if(toggleBtn && drawer) {
+      toggleBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const isActive = drawer.classList.contains('active');
+        
+        if (isActive) {
+          drawer.classList.remove('active');
+          body.style.overflow = '';
+        } else {
+          drawer.classList.add('active');
+          body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+      });
+
+      // Close drawer when clicking outside
+      document.addEventListener('click', function(event) {
+        if (drawer.classList.contains('active') && !drawer.contains(event.target) && !toggleBtn.contains(event.target)) {
+          drawer.classList.remove('active');
+          body.style.overflow = '';
+        }
+      });
+    }
+  });
+</script>

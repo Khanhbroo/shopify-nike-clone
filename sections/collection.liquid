@@ -101,13 +101,14 @@
 
   .products-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr); /* 2 cols default mobile */
+    gap: 15px; /* smaller gap on mobile */
   }
 
   @media (min-width: 768px) {
     .products-grid {
       grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
     }
   }
 
