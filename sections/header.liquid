@@ -1,14 +1,22 @@
-<nav>
+<div class="header-section-wrapper">
   {% render 'header' %}
-</nav>
+</div>
+
+<style>
+  .header-section-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+</style>
 
 {% schema %}
 {
-  "name": "navbar",
+  "name": "Header Navbar",
   "settings": [],
   "presets": [
     {
-      "name": "Navbar"
+      "name": "Header Navbar"
     }
   ]
 }

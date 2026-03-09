@@ -1,73 +1,117 @@
-<section>
-  <div class="banner-wrapper">
-    <div class="slider-text" id="firstText">
-      <p>Members: Free Shipping!</p>
-    </div>
-    <div class="slider-text" id="secondText">
-      <p>Save Up To 40%</p>
-    </div>
-    <div class="slider-text" id="thirdText">
-      <p>Get Your Gear Faster</p>
-    </div>
+<section class="hero-banner" style="{% if section.settings.image != blank %}background-image: url('{{ section.settings.image | image_url }}');{% endif %}">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">{{ section.settings.title | default: "Members: Free Shipping!" }}</h1>
+    <p class="hero-subtitle">{{ section.settings.subtitle | default: "Save Up To 40% & Get Your Gear Faster" }}</p>
+    {% if section.settings.button_link != blank and section.settings.button_text != blank %}
+      <a href="{{ section.settings.button_link }}" class="btn-primary hero-btn">{{ section.settings.button_text }}</a>
+    {% else %}
+      <a href="/collections/all" class="btn-primary hero-btn">Shop Now</a>
+    {% endif %}
   </div>
 </section>
 
 <style>
-  .banner-wrapper {
-    height: 50;
-    color: {{ section.settings.text_color }};
+  .hero-banner {
+    position: relative;
+    height: 70vh;
+    min-height: 500px;
     background-color: {{ section.settings.background_color }};
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: {{ section.settings.text_color }};
+    text-align: center;
   }
 
-  .slider-text {
+  .hero-overlay {
     position: absolute;
-    top: 115px;
-    left: -150%;
-    transform: translate(0, 25%);
-    transition: left 0.6s ease;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* Dark overlay for text readability */
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 20px;
+    animation: fadeInUp var(--transition-slow);
+  }
+
+  .hero-title {
+    font-size: clamp(40px, 8vw, 80px);
+    margin-bottom: 10px;
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(16px, 3vw, 24px);
+    margin-bottom: 30px;
+    font-weight: 300;
+  }
+
+  .hero-btn {
+    font-size: 18px;
+    padding: 15px 35px;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 </style>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const texts = document.querySelectorAll('.slider-text');
-    console.log(texts);
-    let currentIndex = 0;
-
-    const slideText = () => {
-      const currentText = texts[currentIndex];
-      currentText.style.left = '-150%';
-
-      currentIndex = (currentIndex + 1) % texts.length;
-
-      const nextText = texts[currentIndex];
-      nextText.style.left = '44%';
-    };
-
-    setInterval(slideText, 3000);
-  });
-</script>
-
 {% schema %}
 {
-  "name": "banner",
+  "name": "Hero Banner",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
     {
       "type": "color",
       "id": "background_color",
-      "label": "Background Color",
-      "default": "#F4F4F4"
+      "label": "Fallback Background Color",
+      "default": "#0a0a0a"
     },
     {
       "type": "color",
       "id": "text_color",
       "label": "Text Color",
-      "default": "#000000"
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Members: Free Shipping!"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Save Up To 40% & Get Your Gear Faster"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
     }
   ],
   "presets": [
     {
-      "name": "Banner"
+      "name": "Hero Banner"
     }
   ]
 }

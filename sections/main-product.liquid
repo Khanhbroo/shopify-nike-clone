@@ -1,67 +1,224 @@
-<section class="product-main">
-  <div class="product-main-wrapper">
-    <div>
-      <img
-        width="600"
-        height="600"
-        loading="lazy"
-        src="{{ product.featured_image | image_url}}"
-      >
-    </div>
-    <div>
-      <h2>{{ product.title }}</h2>
-      <p>{{ product.price | money }}</p>
-      <p>{{ product.description }}</p>
-      <h3>Select Size</h3>
-      {% form 'product', product %}
-        <select name="id">
-          {% for variant in product.variants %}
-            <option value="{{variant.id }}">
-              {{ variant.title }}
-            </option>
-          {% endfor %}
-        </select>
-      {% endform %}
-      <button type="submit">Add to Card</button>
-      <input type="submit" value="Add to cart">
+<section class="product-main-sec" style="background-color: {{ section.settings.background }}; color: {{ section.settings.text_color }};">
+  <div class="product-main-container">
+    <div class="product-main-grid">
+      
+      <!-- Left Side: Image -->
+      <div class="product-main-image-col">
+        <div class="image-wrapper">
+          <img
+            width="800"
+            height="800"
+            loading="lazy"
+            src="{{ product.featured_image | image_url: width: 1000 }}"
+            alt="{{ product.title | escape }}"
+          >
+        </div>
+      </div>
+      
+      <!-- Right Side: Product Info -->
+      <div class="product-main-info-col">
+        <h1 class="product-detail-title">{{ product.title }}</h1>
+        <p class="product-detail-price">{{ product.price | money }}</p>
+        
+        <div class="product-detail-description">
+          {{ product.description }}
+        </div>
+        
+        <!-- Fix: Form must wrap the select AND the add button -->
+        <div class="product-form-wrapper">
+          {% form 'product', product %}
+            <div class="variant-selector-group">
+              <label for="variant-id">Select Size / Variant</label>
+              <select name="id" id="variant-id" class="custom-select">
+                {% for variant in product.variants %}
+                  <option 
+                    value="{{ variant.id }}"
+                    {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                  >
+                    {{ variant.title }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            
+            <button type="submit" class="btn-primary add-to-cart-btn">
+              Add to Cart
+            </button>
+          {% endform %}
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
 <style>
-   .product-main {
-     background: {{ section.settings.background }}
-     ;
-     color: {{ section.settings.text_color }}
-     ;
-     padding: 10px;
-   }
+  .product-main-sec {
+    width: 100%;
+    padding: 60px 20px;
+    min-height: calc(100vh - 100px); /* Fill screen minus header */
+  }
 
-   .product-main-wrapper {
-     display: flex;
+  .product-main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .product-main-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .product-main-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+  }
+
+  /* Image Block */
+  .image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #ffffff; /* Contrast canvas for product PNGs/SVGs */
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .image-wrapper img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 30px;
+  }
+
+  /* Info Block */
+  .product-detail-title {
+    font-size: clamp(32px, 4vw, 56px);
+    margin: 0 0 10px 0;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .product-detail-price {
+    font-size: 24px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    color: var(--color-accent); /* Cyber Lime Price */
+    margin: 0 0 20px 0;
+  }
+
+  .product-detail-description {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-gray-800);
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--color-gray-200);
+    padding-bottom: 30px;
+  }
+
+  /* Form & Actions */
+  .product-form-wrapper {
+    margin-top: 20px;
+  }
+
+  .variant-selector-group {
+    margin-bottom: 25px;
+  }
+
+  .variant-selector-group label {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .custom-select {
+    width: 100%;
+    padding: 15px 20px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    background-color: var(--color-gray-100);
+    color: #ffffff;
+    border: 1px solid var(--color-gray-200);
+    border-radius: 4px; /* Brutalist shape */
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    transition: border-color var(--transition-fast);
+  }
+
+  .custom-select:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  .add-to-cart-btn {
+    width: 100%; /* Full width button */
+    padding: 20px;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 40px; /* Big pill */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
   }
 </style>
 
+<script>
+  document.addEventListener("DOMContentLoaded", (event) => {
+    // Check if GSAP is available
+    if (typeof gsap !== 'undefined') {
+      const tl = gsap.timeline();
+      
+      // Image slides in from the left
+      tl.fromTo(".product-main-image-col", 
+        { x: -50, opacity: 0 }, 
+        { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+      )
+      // Text and info slides up staggered
+      .fromTo([".product-detail-title", ".product-detail-price", ".product-detail-description", ".product-form-wrapper"], 
+        { y: 30, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" },
+        "-=0.4"
+      );
+    }
+  });
+</script>
+
 {% schema %}
 {
-  "name": "Product-main",
+  "name": "Product Details",
   "settings": [
     {
       "type": "color",
       "id": "background",
       "label": "Background",
-      "default": "#F4F4F4"
+      "default": "#0a0a0a"
     },
     {
       "type": "color",
       "id": "text_color",
-      "label": "Text",
-      "default": "#000000"
+      "label": "Text Color",
+      "default": "#ffffff"
     }
   ],
   "presets": [
     {
-      "name": "product-main"
+      "name": "Product Details"
     }
   ]
 }

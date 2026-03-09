@@ -1,11 +1,17 @@
-<section class="collections">
-  <h1>Featured Collections</h1>
+<section class="collections-section">
+  <div class="collections-header">
+    <h2>{{ section.settings.title | default: 'Featured Collections' }}</h2>
+  </div>
   <div class="collections-container">
-    <div class="collections-wrapper">
+    <div class="collections-grid">
       {% for collection in collections %}
-        <div class="collections-card">
-          <img width="300" height="300" loading="lazy" src="{{ collection.featured_image | image_url }}" alt="">
-          <h3>{{ collection.title | link_to: collection.url }}</h3>
+        <div class="collection-card">
+          <a href="{{ collection.url }}" class="collection-image-link">
+            <img class="collection-image" width="400" height="400" loading="lazy" src="{{ collection.featured_image | image_url: width: 800 }}" alt="{{ collection.title }}">
+            <div class="collection-overlay">
+              <h3 class="collection-title">{{ collection.title }}</h3>
+            </div>
+          </a>
         </div>
       {% endfor %}
     </div>
@@ -13,64 +19,132 @@
 </section>
 
 <style>
-  .collections {
-      background: {{ section.settings.background_color }};
-      color: {{ section.settings.text_color }};
-      padding: 10px;
+  .collections-section {
+    padding: 60px 20px;
+    max-width: 1600px;
+    margin: 0 auto;
+    background: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+  }
+
+  .collections-header {
+    margin-bottom: 30px;
+  }
+
+  .collections-header h2 {
+    font-size: 32px;
+    margin: 0;
   }
 
   .collections-container {
-      position: relative;
-      overflow-x: auto;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  
+  .collections-container::-webkit-scrollbar {
+    display: none;
   }
 
-  .collections-wrapper {
+  .collections-grid {
     display: flex;
-    transition: transform 0.3 ease;
-    justify-content: space-around;
+    gap: 20px;
+    min-width: max-content;
   }
 
-  .collections-card {
-    padding: 5px;
+  @media (min-width: 1024px) {
+    .collections-container {
+      overflow-x: visible;
+    }
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      min-width: auto;
+    }
+  }
+
+  .collection-card {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 320px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+  }
 
-    & h3 a {
-        color: inherit;
-        text-decoration: none;
-        transition: all 0.5s ease;
-
-        &:hover {
-            text-decoration: underline;
-            text-underline-offset: 3px;
-            opacity: 0.75;
-        }
+  @media (min-width: 1024px) {
+    .collection-card {
+      width: auto;
     }
+  }
+
+  .collection-image-link {
+    display: block;
+    position: relative;
+    background-color: var(--color-gray-100);
+    overflow: hidden;
+  }
+
+  .collection-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 4 / 5;
+    transition: transform var(--transition-slow);
+    display: block;
+  }
+
+  .collection-card:hover .collection-image {
+    transform: scale(1.08);
+  }
+
+  .collection-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: #ffffff;
+  }
+
+  .collection-title {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    margin: 0;
+    text-transform: uppercase;
+    color: #ffffff;
   }
 </style>
 
 {% schema %}
 {
-  "name": "collections",
+  "name": "Collections List",
   "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured Collections"
+    },
     {
       "type": "color",
       "id": "background_color",
       "label": "Background Color",
-      "default": "#F4F4F4"
+      "default": "#0a0a0a"
     },
     {
       "type": "color",
       "id": "text_color",
       "label": "Text Color",
-      "default": "#000000"
+      "default": "#ffffff"
     }
   ],
   "presets": [
     {
-      "name": "Collections"
+      "name": "Collections List"
     }
   ]
 }

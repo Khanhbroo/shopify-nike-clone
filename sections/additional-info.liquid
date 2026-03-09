@@ -1,92 +1,84 @@
-<section class="additional-info">
-  <div class="additional-info-wrapper">
-    {% if section.settings.first_text != blank %}
-      <h1>{{ section.settings.first_text }}</h1>
-
-    {% else %}
-      <h1>THE RESOLUTION STARTER PACK</h1>
-    {% endif %}
-
-    {% if section.settings.second_text != blank %}
-      <p>{{ section.settings.second_text }}</p>
-
-    {% else %}
-      <p>
-        Go for all your fitness goals with a curated collection of new kicks breathable apparel, and more supportive
-        styles
-      </p>
-    {% endif %}
-
-    <button>Shop</button>
+<section class="additional-info-cta" style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }};">
+  <div class="cta-wrapper">
+    <h1 class="cta-heading">{{ section.settings.first_text | default: "THE RESOLUTION STARTER PACK" }}</h1>
+    <p class="cta-subtext">{{ section.settings.second_text | default: "Go for all your fitness goals with a curated collection of new kicks, breathable apparel, and more supportive styles." }}</p>
+    <a href="{{ section.settings.link | default: '/collections/all' }}" class="btn-primary cta-btn">Shop Collection</a>
   </div>
 </section>
 
 <style>
-  .additional-info {
-    background: {{ section.settings.background_color }};
-    color: {{ section.settings.text_color }};
+  .additional-info-cta {
     display: flex;
-    justify-content: center;
-  }
-
-  .additional-info-wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 500px;
     justify-content: center;
     align-items: center;
+    padding: 80px 20px;
+    text-align: center;
+  }
 
-    & h1 {
-        font-size: 50px;
-    }
+  .cta-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    align-items: center;
+  }
 
-    & button {
-        padding: 10px 20px;
-        background-color: #000;
-        border: none;
-        color: #fff;
-        border-radius: 20px;
-        cursor: pointer;
-        transition: all 0.2s ease;
+  .cta-heading {
+    font-size: clamp(36px, 6vw, 64px);
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
 
-        &:hover {
-            background-color: rgb(185, 185, 185);
-            color: rgb(0, 0, 0);
-        }
-    }
+  .cta-subtext {
+    font-size: clamp(16px, 2.5vw, 18px);
+    margin-bottom: 30px;
+    font-weight: 400;
+    max-width: 600px;
+    line-height: 1.5;
+  }
+
+  .cta-btn {
+    font-size: 16px;
+    padding: 12px 30px;
   }
 </style>
 
 {% schema %}
 {
-  "name": "additional-information",
+  "name": "Call To Action Text",
   "settings": [
     {
       "type": "color",
       "id": "background_color",
       "label": "Background Color",
-      "default": "#F4F4F4"
+      "default": "#171717"
     },
     {
       "type": "color",
       "id": "text_color",
       "label": "Text Color",
-      "default": "#000000"
+      "default": "#ffffff"
     },
     {
       "type": "text",
       "id": "first_text",
-      "label": "First Text"
+      "label": "Heading",
+      "default": "THE RESOLUTION STARTER PACK"
     },
     {
       "type": "text",
       "id": "second_text",
-      "label": "Second Text"
+      "label": "Subheading",
+      "default": "Go for all your fitness goals with a curated collection of new kicks, breathable apparel, and more supportive styles."
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Button Link"
     }
   ],
   "presets": [
     {
-      "name": "Additional Information"
+      "name": "Call To Action Text"
     }
   ]
 }

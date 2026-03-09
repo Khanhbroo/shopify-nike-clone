@@ -1,28 +1,36 @@
 <header class="header-nav">
   <div class="left-navbar">
     <a href="/">
-      <img width="80" loading="lazy" src="{{"nike.png" | asset_url}}" alt="Header Navbar">
+      <img width="80" loading="lazy" src="{{ 'nike.png' | asset_url }}" alt="Nike Logo">
     </a>
   </div>
 
-  <div>
+  <nav class="middle-navbar-container">
     <ul class="middle-navbar">
       {% for link in linklists['customer-account-main-menu'].links %}
-        <li>{{ link.title | link_to: link.url }}</li>
+        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {% else %}
+        <!-- Fallback if linklist is empty -->
+        <li><a href="/collections/all">New & Featured</a></li>
+        <li><a href="/collections/men">Men</a></li>
+        <li><a href="/collections/women">Women</a></li>
+        <li><a href="/collections/kids">Kids</a></li>
+        <li><a href="/collections/sale">Sale</a></li>
       {% endfor %}
     </ul>
-  </div>
+  </nav>
 
-  <div class="right-navbar">
-    <form action="{{ routes.search_url }}">
+  <div class="right-navbar" style="display: flex; align-items: center; gap: 15px;">
+    <form action="{{ routes.search_url }}" style="margin: 0; display: flex; align-items: center;">
       <input
         type="search"
         class="search-navbar"
         placeholder="Search..."
+        name="q"
       >
     </form>
-    <a href="/">
-      <img width="40" height="40" loading="lazy" src="{{"cart.png" |  asset_url}}" alt="Nike Logo">
+    <a href="/cart" class="cart-icon" style="display: flex; align-items: center;">
+      <img width="30" height="30" loading="lazy" src="{{ 'cart.png' | asset_url }}" alt="Cart">
     </a>
   </div>
 </header>

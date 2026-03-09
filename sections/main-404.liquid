@@ -1,23 +1,57 @@
-<section class="notfound">
-  <div class="notfound-in"><h1>404 Not Found</h1></div>
+<section class="notfound-sec">
+  <div class="notfound-container">
+    <h1 class="notfound-title">404</h1>
+    <h2>We can't find the page you're looking for.</h2>
+    <p>The page may have been moved, deleted, or possibly never existed.</p>
+    <a href="/collections/all" class="btn-primary notfound-btn">Return to Shop</a>
+  </div>
 </section>
 
 <style>
-  .notfound {
-    background-color: rgb(226, 226, 226);
+  .notfound-sec {
+    background-color: var(--color-white);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Set the height to the full viewport height */
+    min-height: 60vh;
+    padding: 60px 20px;
+    text-align: center;
   }
-  .notfound-in h1 {
-    font-size: 100px;
+  
+  .notfound-container {
+    max-width: 600px;
+  }
+  
+  .notfound-title {
+    font-size: clamp(80px, 15vw, 150px);
+    line-height: 1;
+    margin-bottom: 20px;
+    color: var(--color-gray-200);
+  }
+  
+  .notfound-container h2 {
+    font-family: var(--font-body);
+    font-size: clamp(24px, 4vw, 32px);
+    margin-bottom: 15px;
+    text-transform: none;
+    font-weight: 600;
+  }
+  
+  .notfound-container p {
+    font-size: 16px;
+    color: var(--color-gray-800);
+    margin-bottom: 40px;
+  }
+  
+  .notfound-btn {
+    padding: 15px 40px;
+    font-size: 16px;
   }
 </style>
 
 {% schema %}
 {
-  "name": "main-404",
+  "name": "404 Page",
   "settings": [],
   "presets": []
 }

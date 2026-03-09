@@ -1,48 +1,48 @@
 {% if section.settings['show-announcement'] %}
   <section>
-    <div class="announcement-bar">
+    <div class="announcement-bar-main" style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }};">
       <div class="announcement-bar-left-section">
         {% if section.settings.image_left != blank %}
           <img
-            width="40"
-            height="40"
+            width="24"
+            height="24"
             loading="lazy"
             src="{{section.settings.image_left | image_url }}"
-            alt="Announcement Bar Left"
+            alt="Announcement Left"
           >
-
         {% else %}
           <img
-            width="40"
-            height="40"
+            width="24"
+            height="24"
             loading="lazy"
-            src="{{"announcement-bar-left.png" | asset_url}}"
-            alt="Announcement Bar"
+            src="{{ 'announcement-bar-left.png' | asset_url }}"
+            alt="Announcement Left"
           >
         {% endif %}
 
         {% if section.settings.image_right != blank %}
           <img
-            width="40"
-            height="40"
+            width="24"
+            height="24"
             loading="lazy"
             src="{{section.settings.image_right | image_url }}"
-            alt="Annoucement Bar Right"
+            alt="Announcement Right"
+            class="ml-2"
           >
-
         {% else %}
           <img
-            width="40"
-            height="40"
+            width="24"
+            height="24"
             loading="lazy"
-            src="{{"announcement-bar-right.png" | asset_url}}"
-            alt="Announcement Bar Right"
+            src="{{ 'announcement-bar-right.png' | asset_url }}"
+            alt="Announcement Right"
+            class="ml-2"
           >
         {% endif %}
       </div>
 
       <div class="announcement-bar-right-section">
-        <ul class="announcement-bar-inner-list">
+        <ul class="announcement-bar-inner-list-custom">
           {% if section.blocks.size == 0 %}
             <li>
               <a href="{{routes.root_url}}pages/contact">Help</a>
@@ -50,12 +50,10 @@
             <li>
               {% if shop.customer_accounts_enabled and customer %}
                 <a href="{{ routes.account_url }}">Account</a>
-
               {% else %}
                 <a href="{{ routes.account_login_url }}">Sign in</a>
               {% endif %}
             </li>
-
           {% else %}
             {% for block in section.blocks %}
               <li>
@@ -70,9 +68,63 @@
 {% endif %}
 
 <style>
-  .announcement-bar {
-    background: {{ section.settings.background_color }};
-    color: {{ section.settings.text_color }};
+  .announcement-bar-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    font-size: 13px;
+    font-family: var(--font-body);
+  }
+
+  .announcement-bar-left-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .announcement-bar-left-section img {
+    border-radius: 4px; /* Fix square sharpness */
+    object-fit: contain;
+    mix-blend-mode: screen; /* Helps integrate images with white backgrounds nicely onto dark headers */
+    width: 30px;
+    height: 30px;
+    transition: transform var(--transition-fast);
+  }
+
+  .announcement-bar-left-section img:hover {
+    transform: scale(1.1);
+  }
+
+  .announcement-bar-inner-list-custom {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    gap: 10px; /* Add spacing between buttons */
+  }
+
+  .announcement-bar-inner-list-custom li {
+    list-style-type: none;
+    line-height: 1;
+  }
+
+  .announcement-bar-inner-list-custom a {
+    color: #ffffff;
+    background-color: var(--color-text); /* usually white in dark mode */
+    padding: 10px 14px;
+    border-radius: 20px; /* Pill shape for "cảm giác bấm" */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all var(--transition-fast);
+    display: inline-block;
+  }
+  
+  .announcement-bar-inner-list-custom a:hover {
+    background-color: var(--color-accent); /* Cyber Lime on hover */
+    color: #0a0a0a;
+    transform: translateY(-2px);
   }
 </style>
 
@@ -102,13 +154,13 @@
       "type": "color",
       "id": "background_color",
       "label": "Background Color",
-      "default": "#F4F4F4"
+      "default": "#171717"
     },
     {
       "type": "color",
       "id": "text_color",
       "label": "Text Color",
-      "default": "#000000"
+      "default": "#ffffff"
     }
   ],
   "blocks": [

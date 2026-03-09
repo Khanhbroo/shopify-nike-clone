@@ -1,88 +1,193 @@
 <footer class="footer-main">
-  <div class="footer-section-first">
-    {%- if section.blocks.size == 0 -%}
-      <div>
-        <p>Guides</p>
-        <p>Terms of Sale</p>
-        <p>Terms of Use</p>
-        <p>Guides</p>
-        <p>Terms of Sale</p>
-      </div>
-      <div>
-        <p>Guides</p>
-        <p>Terms of Sale</p>
-        <p>Terms of Use</p>
-        <p>Guides</p>
-        <p>Terms of Sale</p>
-      </div>
-
-    {% else %}
-      {% for block in section.blocks %}
-        <div>
-          <li>
-            <a href="{{ block.settings.footer_link }}">{{ block.settings.footer_text | escape }}</a>
-          </li>
-          <li>
-            <a href="{{ block.settings.footer_link }}">{{ block.settings.footer_text | escape }}</a>
-          </li>
-          <li>
-            <a href="{{ block.settings.footer_link }}">{{ block.settings.footer_text | escape }}</a>
-          </li>
-          <li>
-            <a href="{{ block.settings.footer_link }}">{{ block.settings.footer_text | escape }}</a>
-          </li>
-        </div>
-      {% endfor %}
-    {%- endif -%}
+  <div class="footer-grid">
+    <div class="footer-column">
+      <h3>Shop</h3>
+      <ul>
+        <li><a href="/collections/all">New Arrivals</a></li>
+        <li><a href="/collections/men">Men</a></li>
+        <li><a href="/collections/women">Women</a></li>
+        <li><a href="/collections/kids">Kids</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h3>Help</h3>
+      <ul>
+        <li><a href="#">Order Status</a></li>
+        <li><a href="#">Shipping & Delivery</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Payment Options</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h3>About</h3>
+      <ul>
+        <li><a href="#">News</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Investors</a></li>
+        <li><a href="#">Sustainability</a></li>
+      </ul>
+    </div>
+    <div class="footer-column footer-newsletter">
+      <h3>Stay Updated</h3>
+      <p>Sign up for the latest news, offers, and styles.</p>
+      <form class="newsletter-form" onsubmit="event.preventDefault();">
+        <input type="email" placeholder="Email Address" required>
+        <button type="submit">→</button>
+      </form>
+    </div>
   </div>
 
-  <div class="footer-section-second">
-    <p>Guides</p>
-    <p>Terms of Sale</p>
-    <p>Terms of Use</p>
-    <p>Privacy Policy</p>
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      <p>&copy; {{ 'now' | date: "%Y" }} Nike Clone, Inc. All Rights Reserved</p>
+      <ul>
+        <li><a href="#">Guides</a></li>
+        <li><a href="#">Terms of Sale</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Nike Privacy Policy</a></li>
+      </ul>
+    </div>
   </div>
 </footer>
 
 <style>
   .footer-main {
-    background: {{ section.settings.background_color }};
-    color: {{ section.settings.text_color }};
-    padding: 10px;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    padding: 60px 40px 20px;
+    font-size: 14px;
   }
 
-  .footer-section-first {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-around;
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    max-width: 1600px;
+    margin: 0 auto 60px;
   }
 
-  .footer-section-second {
-    display: flex;
-
-    & p {
-        padding: 10px;
+  @media (max-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
+  }
+
+  @media (max-width: 600px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .footer-column h3 {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    color: var(--color-white);
+  }
+
+  .footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-column li {
+    margin-bottom: 12px;
+  }
+
+  .footer-column a {
+    color: var(--color-gray-200);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-column a:hover {
+    color: var(--color-white);
+  }
+
+  .footer-newsletter p {
+    color: var(--color-gray-200);
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
+
+  .newsletter-form {
+    display: flex;
+    border-bottom: 1px solid var(--color-gray-200);
+    padding-bottom: 5px;
+  }
+
+  .newsletter-form input {
+    background: transparent;
+    border: none;
+    color: var(--color-white);
+    flex-grow: 1;
+    font-family: var(--font-body);
+    outline: none;
+  }
+
+  .newsletter-form input::placeholder {
+    color: #999;
+  }
+
+  .newsletter-form button {
+    background: transparent;
+    border: none;
+    color: var(--color-white);
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform var(--transition-fast);
+  }
+
+  .newsletter-form button:hover {
+    transform: translateX(3px);
+  }
+
+  .footer-bottom {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+  }
+
+  .footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--color-gray-200);
+    font-size: 12px;
+  }
+
+  .footer-legal p {
+    margin: 0 20px 0 0;
+  }
+
+  .footer-legal ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 20px;
+  }
+
+  .footer-legal a {
+    color: var(--color-gray-200);
+    text-decoration: none;
+  }
+
+  .footer-legal a:hover {
+    color: var(--color-white);
   }
 </style>
 
 {% schema %}
 {
-  "name": "footer",
-  "settings": [
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text Color",
-      "default": "#F4F4F4"
-    }
-  ],
+  "name": "Footer",
+  "settings": [],
   "presets": [
     {
       "name": "Footer"
