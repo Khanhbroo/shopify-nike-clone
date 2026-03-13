@@ -1,5 +1,7 @@
 <html>
   <head>
+ {%- if content_for_header contains 'tapita-seo-script-tags' -%}{%- include 'tapita-seo-schema' -%}{%- endif -%} 
+
     {{ content_for_header }}
     {{ 'theme.css' | asset_url | stylesheet_tag }}
     
